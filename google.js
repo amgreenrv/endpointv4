@@ -1,24 +1,12 @@
-const axios = require('axios');
-const data = '';
-
+const fetch = require('node-fetch');
 let search = 'J.D.+Robb';
 
-const config = {
-  method: 'get',
-  url: `https://www.googleapis.com/books/v1/volumes?q=inauthor:${search}&limit=10`,
-  headers: { 
-    'AIzaSyC_5CEs9GPgydzpcjcA5wNoNjJ4eEsMNsU': ''
-  },
-  data : data
-};
 
-axios(config)
-.then((response) => {
-  console.log(JSON.stringify(response.data));
-})
-.catch((error) => {
-  console.log(error);
-});
-
-
-module.exports = config;
+//Fetch Path
+fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${search}`)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    console.log(data)
+  });
