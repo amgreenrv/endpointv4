@@ -5,7 +5,6 @@ const books = require('./routes/books');
 const home = require('./routes/home');
 const bodyParser = require('body-parser');
 const sqlDatabase = require('./database');
-const google = require('./google');
 
 app.set('view engine', 'pug');
 app.set('views', './views')
