@@ -4,7 +4,10 @@ const router = express.Router();
 const books = [
     {id: 1, title: 'title1', author: 'author1', publisher: 'publisher1'},
     {id: 2, title: 'title2', author: 'author2', publisher: 'publisher2'},
-    {id: 3, title: 'title3', author: 'author3', publisher: 'publisher3'}
+    {id: 3, title: 'title3', author: 'author3', publisher: 'publisher3'},
+    {id: 1, title: 'title4', author: 'author4', publisher: 'publisher4'},
+    {id: 2, title: 'title5', author: 'author5', publisher: 'publisher5'},
+    {id: 3, title: 'title6', author: 'author6', publisher: 'publisher6'}
 ];
 
 //GET books path

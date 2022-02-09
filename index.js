@@ -1,4 +1,3 @@
-const helmet = require('helmet');
 const Joi = require('joi'); //validates
 const express = require('express');
 const app = express();
@@ -15,7 +14,6 @@ app.set('views', './views')
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false})); // key=value&key=value
 app.use(express.static('public'));
-app.use(helmet());
 app.use('/api/books', books);
 app.use('/', home);
 
@@ -23,7 +21,7 @@ app.use('/', home);
 //MySQL Database connection
 sqlDatabase.execute('SELECT * FROM books')
     .then(result => {
-    console.log(result[0]);
+    //console.log(result[0]);
 })
     .catch(err => {
     console.log(err);
