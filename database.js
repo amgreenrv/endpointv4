@@ -1,15 +1,8 @@
 const mysql = require('mysql2');
 const fetch = require('node-fetch');
-let search = 'Danielle Steel';
+let search = 'Nora Roberts';
 
 //Create Connection pool
-//const pool = mysql.createPool({
-//    host: 'localhost',
-//    user: 'root',
- //   database: 'node-ita',
- //   password: 'fallon87'
-//});
-
 const con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -26,6 +19,11 @@ fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${search}&limit=10
     return response.json();
   })
   .then(data => {
+
+    const books = data.items;
+    books.forEach(book => {
+    console.log(book.volumeInfo.title);
+});
 
     const bookInfo0 = data.items[0];
     const bookInfo1 = data.items[1];
@@ -61,11 +59,10 @@ fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${search}&limit=10
 // Array for Each, struggling to get it to target the right information
 //  bookArray.forEach(element => console.log(element));
 
-// let reformattedArray = bookArray.map(obj => {
-//   let rObj = {}
-//   rObj[obj.title] = obj.title
-//   return rObj
-// });
+// const books = data.items;
+// books.forEach(book => {
+//    console.log(book.volumeInfo.title);
+//})
 
 // console.log(reformattedArray);
 
@@ -77,18 +74,23 @@ fetch(`https://www.googleapis.com/books/v1/volumes?q=inauthor:${search}&limit=10
 
         //Right now, this is going into a single table, this needs to be split out into a books, author, publisher table with SQL.
         //Need a cleaner way to iterate above before trying to add that into it.
+        //Probably need to add a constructor function for the returned data.
 
-        const sql = "INSERT INTO books (title, author, publisher) VALUES ?";
-    let values = [
+        const sqlTitle = "INSERT INTO books (title, author, publisher) VALUES ?";
+     //   const sqlAuthor= "INSERT INTO authors (author) VALUES ?";
+    //    const sqlPublisher = "INSERT INTO publisher (publisher) VALUES ?";
+
+    let combinedValues = [
         [comboTitle0, comboAuthor0, comboPublisher0],
         [comboTitle1, comboAuthor1, comboPublisher1],
         [comboTitle2, comboAuthor2, comboPublisher2],
         [comboTitle3, comboAuthor3, comboPublisher3],
         [comboTitle4, comboAuthor4, comboPublisher4]
     ];
-        con.query(sql, [values], function (err, result) {
+        con.query(sqlTitle, [combinedValues], function (err, result) {
             if (err) throw err;
         console.log("Number of records inserted: " + result.affectedRows);
+        console.log(combinedValues);
     });
 });
 
